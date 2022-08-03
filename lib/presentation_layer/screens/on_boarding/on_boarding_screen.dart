@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shop_app/data_layer/network/local/cache_helper.dart';
 import 'package:shop_app/presentation_layer/screens/login/login.dart';
 import 'package:shop_app/presentation_layer/widgets/SharedWidgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -9,7 +10,7 @@ class BoardingModel {
   final String title;
   final String body;
 
-  BoardingModel({required this.image, required this.title, required this.body});
+  BoardingModel({@required this.image, @required this.title, @required this.body});
 }
 
 class OnBoardingScreen extends StatefulWidget {
@@ -36,6 +37,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   var boardController = PageController();
   bool isLast = false;
 
+  void submit() {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if (value==true){
+        navigateToAndReplacement(context, ShopLoginScreen());
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +53,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         backgroundColor: HexColor('#FFFFFF'),
         elevation: 0,
         actions: [
-          TextButton(onPressed: (){navigateToAndReplacement(context, ShopLoginScreen());}, child: Text('Skip',style: TextStyle(color: HexColor('#F18D35')),))
+          TextButton(
+              onPressed: submit,
+              child: Text(
+                'Skip',
+                style: TextStyle(color: HexColor('#F18D35')),
+              ))
         ],
       ),
       body: Padding(
@@ -52,17 +67,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           children: [
             Expanded(
               child: PageView.builder(
-                onPageChanged:(index){
-                  if(index==boarding.length-1){
-                    setState((){
+                onPageChanged: (index) {
+                  if (index == boarding.length - 1) {
+                    setState(() {
                       isLast = true;
                     });
-                  }else{
-                    setState((){
+                  } else {
+                    setState(() {
                       isLast = false;
                     });
                   }
-                } ,
+                },
                 controller: boardController,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) =>
@@ -75,19 +90,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SmoothPageIndicator(
                   controller: boardController,
                   count: boarding.length,
-                  effect:ExpandingDotsEffect(
+                  effect: ExpandingDotsEffect(
                     dotColor: Colors.grey,
                     spacing: 5,
                     expansionFactor: 4,
-                    activeDotColor:HexColor('#F18D35') ,
-                  ) ,
+                    activeDotColor: HexColor('#F18D35'),
+                  ),
                 ),
                 Spacer(),
                 FloatingActionButton(
                   onPressed: () {
-                    if(isLast){
-                      navigateToAndReplacement(context, ShopLoginScreen());
-                    }else{
+                    if (isLast) {
+                      submit();
+                    } else {
                       boardController.nextPage(
                           duration: Duration(seconds: 1),
                           curve: Curves.easeInBack);
@@ -103,7 +118,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Widget buildBoardingItem(model) => Column(
+  Widget buildBoardingItem(model) =>
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
