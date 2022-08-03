@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 Widget defaultButton({
   double wid = double.infinity,
   double r = 10.0,
   required String text,
   bool isUpper = true,
-  Color back = Colors.blue,
-  required Function function,
+  Color color = Colors.blue,
+  required function,
 }) =>
     Container(
       width: wid,
       decoration: BoxDecoration(
-        color: back,
+        color: color,
         borderRadius: BorderRadius.circular(
           r,
         ),
       ),
       child: FlatButton(
-        onPressed: function(),
+        onPressed: function,
         child: Text(
           isUpper ? text.toUpperCase() : text,
           style: const TextStyle(
@@ -49,14 +50,14 @@ Widget defaultFormField({
           5.0,
         ),
         border: Border.all(
-          color: Colors.grey,
+          color: HexColor('#F18D35'),
         ),
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 15.0,
       ),
       child: TextFormField(
-        cursorColor: Colors.teal,
+        cursorColor: HexColor('#F18D35'),
         //Validation is not correct
         //validator:validate ,
         onFieldSubmitted: onSubmit,
@@ -66,10 +67,23 @@ Widget defaultFormField({
         onChanged: onChange,
         onTap: onTap,
         decoration: InputDecoration(
-          label: Text(label),
-          prefixIcon: Icon(prefix),
+          label: Text(
+            label,
+            style: TextStyle(color: HexColor('#F18D35')),
+          ),
+          prefixIcon: Icon(
+            prefix,
+            color: HexColor('#F18D35'),
+          ),
           hintText: hint,
           border: InputBorder.none,
+          suffixIcon: IconButton(
+            icon: Icon(
+              suffix,
+              color: HexColor('#F18D35'),
+            ),
+            onPressed: suffixPressed,
+          ),
         ),
       ),
     );
@@ -87,3 +101,10 @@ void navigateToAndReplacement(context, widget) => Navigator.pushReplacement(
         builder: (context) => widget,
       ),
     );
+
+Widget defaultTextButton({required function, required text}) => TextButton(
+    onPressed: function,
+    child: Text(
+      text,
+      style: TextStyle(color: HexColor('#F18D35')),
+    ));
