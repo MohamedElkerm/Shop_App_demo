@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shop_app/data_layer/network/local/cache_helper.dart';
+import 'package:shop_app/presentation_layer/screens/login/login.dart';
 
 Widget defaultButton({
   double wid = double.infinity,
@@ -89,29 +91,26 @@ Widget defaultFormField({
       ),
     );
 
-void navigateTo(context, widget) =>
-    Navigator.push(
+void navigateTo(context, widget) => Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => widget,
       ),
     );
 
-void navigateToAndReplacement(context, widget) =>
-    Navigator.pushReplacement(
+void navigateToAndReplacement(context, widget) => Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => widget,
       ),
     );
 
-Widget defaultTextButton({@required function, @required text}) =>
-    TextButton(
-        onPressed: function,
-        child: Text(
-          text,
-          style: TextStyle(color: HexColor('#F18D35')),
-        ));
+Widget defaultTextButton({@required function, @required text}) => TextButton(
+    onPressed: function,
+    child: Text(
+      text,
+      style: TextStyle(color: HexColor('#F18D35')),
+    ));
 
 void showToast({@required state, @required msg}) {
   Fluttertoast.showToast(
@@ -119,7 +118,7 @@ void showToast({@required state, @required msg}) {
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
-    backgroundColor:chooseToastColor(state),
+    backgroundColor: chooseToastColor(state),
     textColor: Colors.white,
     fontSize: 16.0,
   );
@@ -141,3 +140,20 @@ Color chooseToastColor(ToastStates state) {
       break;
   }
 }
+
+void signOut({@required context}) {
+  CacheHelper.removeData(key: 'token').then((value) {
+    if (value) {
+      navigateTo(context, ShopLoginScreen());
+    }
+  });
+}
+
+void printFullText(text) {
+  final pattern = RegExp('.{1.800}');
+  pattern.allMatches(text).forEach((element) {
+    print(element.group(0));
+  });
+}
+
+String token ='';
