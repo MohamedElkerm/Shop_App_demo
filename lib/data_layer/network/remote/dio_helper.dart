@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class DioHelper {
   static Dio dio;
@@ -26,7 +27,7 @@ class DioHelper {
   }
 
   static Future<Response> postData(
-      {url, query, data, lang = 'ar', token}) async {
+      {@required url, query,@required data, lang = 'ar', token}) async {
     ///TODo: this bloc of code is unSuccess
     dio.options.headers = {
       'lang': lang,

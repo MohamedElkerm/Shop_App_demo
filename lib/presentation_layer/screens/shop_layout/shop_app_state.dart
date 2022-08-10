@@ -12,6 +12,13 @@ class ShopLoadingHomeDataState extends ShopStates{}
 class ShopSuccessHomeDataState extends ShopStates{}
 
 class ShopErrorHomeDataState extends ShopStates{
-  final err;
+  final  err;
   ShopErrorHomeDataState({this.err});
+}
+
+class ShopSuccessCategoriesDataState extends ShopStates{}
+
+class ShopErrorCategoriesDataState extends ShopStates{
+  final  err;
+  ShopErrorCategoriesDataState({this.err});
 }
