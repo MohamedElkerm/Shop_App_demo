@@ -22,3 +22,21 @@ class ShopErrorCategoriesDataState extends ShopStates{
   final  err;
   ShopErrorCategoriesDataState({this.err});
 }
+
+class ShopSuccessChangeFavoriteState extends ShopStates{}
+
+class ShopChangeFavoriteState extends ShopStates{}
+
+class ShopErrorChangeFavoriteState extends ShopStates{
+  final  err;
+  ShopErrorChangeFavoriteState({this.err});
+}
+
+class ShopSuccessFavoritesDataState extends ShopStates{}
+
+class ShopLoadingFavoritesDataState extends ShopStates{}
+
+class ShopErrorFavoritesDataState extends ShopStates{
+  final  err;
+  ShopErrorFavoritesDataState({this.err});
+}

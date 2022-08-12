@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shop_app/constants.dart';
 import 'package:shop_app/data_layer/network/local/cache_helper.dart';
 import 'package:shop_app/data_layer/network/remote/dio_helper.dart';
 import 'package:shop_app/presentation_layer/screens/login/login.dart';
@@ -56,13 +57,16 @@ class MyApp extends StatelessWidget {
    @override
    Widget build(BuildContext context) {
      return BlocProvider(
-       create: (BuildContext context)=>ShopCubit()..getHomeData()..getCategories() ,
+       create: (BuildContext context)=>ShopCubit()..getHomeData()..getCategories()..getFavorites() ,
        child: BlocConsumer<ShopCubit,ShopStates>(
          listener: (BuildContext context, state) {  },
          builder: (BuildContext context, state)=>MaterialApp(
            debugShowCheckedModeBanner: false,
            title: 'Shop App',
            theme: ThemeData(
+             iconTheme: IconThemeData(
+               color: color
+             ),
              bottomNavigationBarTheme: BottomNavigationBarThemeData(
                backgroundColor: HexColor('#F18D35'),
                selectedItemColor: HexColor('#F18D35'),
