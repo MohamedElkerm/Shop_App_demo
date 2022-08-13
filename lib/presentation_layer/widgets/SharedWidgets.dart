@@ -37,6 +37,7 @@ Widget defaultFormField({
   @required controller,
   @required label,
   @required prefix,
+  enable,
   @required type,
   suffix,
   suffixPressed,
@@ -60,6 +61,7 @@ Widget defaultFormField({
         horizontal: 15.0,
       ),
       child: TextFormField(
+        enabled: enable,
         cursorColor: HexColor('#F18D35'),
         //Validation is not correct
         //validator:validate ,

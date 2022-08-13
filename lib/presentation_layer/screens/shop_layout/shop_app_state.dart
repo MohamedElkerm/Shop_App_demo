@@ -40,3 +40,15 @@ class ShopErrorFavoritesDataState extends ShopStates{
   final  err;
   ShopErrorFavoritesDataState({this.err});
 }
+
+class ShopSuccessUserDataState extends ShopStates{
+  final ShopLoginModel loginModel;
+  ShopSuccessUserDataState({@required this.loginModel});
+}
+
+class ShopLoadingUserDataState extends ShopStates{}
+
+class ShopErrorUserDataState extends ShopStates{
+  final  err;
+  ShopErrorUserDataState({this.err});
+}

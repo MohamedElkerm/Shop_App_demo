@@ -20,7 +20,7 @@ class FavoritesScreen extends StatelessWidget {
               },
               builder: (BuildContext context) {
                 return ListView.separated(
-                  itemBuilder: (context, index) => buildFavItem(cubit.favoritesModel.data.data[index],context),
+                  itemBuilder: (context, index) => buildFavItem(cubit.favoritesModel.data.data[index].product,context),
                   separatorBuilder: (context, index) => Divider(),
                   itemCount: cubit.favoritesModel.data.data.length,
                 );
@@ -30,8 +30,7 @@ class FavoritesScreen extends StatelessWidget {
         }
     );
   }
-
-  Widget buildFavItem(FavoritesData model,context) {
+  Widget buildFavItem(Product model,context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
@@ -42,11 +41,11 @@ class FavoritesScreen extends StatelessWidget {
               alignment: AlignmentDirectional.bottomStart,
               children: [
                 Image(
-                  image: NetworkImage(model.product.image),
+                  image: NetworkImage(model.image),
                   width: 120.0,
                   height: 200.0,
                 ),
-                if (model.product.discount != 0)
+                if (model.discount != 0)
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 5),
                     color: color,
@@ -63,7 +62,7 @@ class FavoritesScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.product.name,
+                    model.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 14, height: 1.3),
@@ -72,16 +71,17 @@ class FavoritesScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '${model.product.price.round()}',
+                        '${model.price.round()}',
                         style:
                         TextStyle(fontSize: 12, height: 1.3, color: color),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      if (model.product.discount != 0)
+                      if (model.discount != 0)
                         Text(
-                          '${model.product.oldPrice.round()}',
+                          ///Error is here ****************************************************************************
+                          '${model.oldPrice.round()}',
                           style: const TextStyle(
                             fontSize: 10,
                             height: 1.3,
@@ -92,14 +92,14 @@ class FavoritesScreen extends StatelessWidget {
                       const Spacer(),
                       IconButton(
                         onPressed: () {
-                          print(model.product.id);
+                          print(model.id);
                           BlocProvider.of<ShopCubit>(context).changeFavorites(
-                              model.product.id);
+                              model.id);
                         },
                         icon: CircleAvatar(
                           backgroundColor: BlocProvider
                               .of<ShopCubit>(context)
-                              .favorites[model.product.id] ? color : Colors.grey,
+                              .favorites[model.id] ? color : Colors.grey,
                           child: Icon(
                             Icons.favorite_border_outlined,
                             size: 15,
@@ -117,4 +117,5 @@ class FavoritesScreen extends StatelessWidget {
       ),
     );
   }
+
 }

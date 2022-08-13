@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ShopLoginScreen extends StatelessWidget {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -25,6 +25,7 @@ class ShopLoginScreen extends StatelessWidget {
             if (state.loginModel.status == true) {
               showToast(state: ToastStates.SUCCESS, msg: state.loginModel.message);
               CacheHelper.saveData(key: 'token', value: state.loginModel.data.token).then((value){
+                token = state.loginModel.data.token;
                 navigateToAndReplacement(context, ShopLayout());
               });
             } else {

@@ -27,7 +27,7 @@ class DioHelper {
   }
 
   static Future<Response> postData(
-      {@required url, query,@required data, lang = 'ar', token}) async {
+      {@required url, query,@required data, lang = 'en', token}) async {
     ///TODo: this bloc of code is unSuccess
     dio.options.headers = {
       'lang': lang,
