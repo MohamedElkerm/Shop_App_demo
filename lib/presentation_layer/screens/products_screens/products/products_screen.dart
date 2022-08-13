@@ -79,6 +79,7 @@ class ProductsScreen extends StatelessWidget {
                       itemCount: categoriesModel.data.data.length,
                     ),
                   ),
+                  SizedBox(height: 15,),
                   Text(
                     'New Products',
                     style: TextStyle(fontSize: 24, color: color),
