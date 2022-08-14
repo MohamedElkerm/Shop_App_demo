@@ -22,16 +22,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> boarding = [
     BoardingModel(
         image: 'assets/images/on_boarding1.gif',
-        title: 'On Board 1',
-        body: 'on board 1 body'),
+        title: 'Salla in shopping',
+        body: 'easy app to do it'),
     BoardingModel(
         image: 'assets/images/on_boarding3.gif',
-        title: 'On Board 2',
-        body: 'on board 2 body'),
+        title: 'Friendly',
+        body: 'amazing UI'),
     BoardingModel(
         image: 'assets/images/on_boarding2.gif',
-        title: 'On Board 3',
-        body: 'on board 3 body'),
+        title: 'Products',
+        body: 'just imagine it'),
   ];
 
   var boardController = PageController();
@@ -61,58 +61,61 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                onPageChanged: (index) {
-                  if (index == boarding.length - 1) {
-                    setState(() {
-                      isLast = true;
-                    });
-                  } else {
-                    setState(() {
-                      isLast = false;
-                    });
-                  }
-                },
-                controller: boardController,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) =>
-                    buildBoardingItem(boarding[index]),
-                itemCount: boarding.length,
-              ),
-            ),
-            Row(
-              children: [
-                SmoothPageIndicator(
-                  controller: boardController,
-                  count: boarding.length,
-                  effect: ExpandingDotsEffect(
-                    dotColor: Colors.grey,
-                    spacing: 5,
-                    expansionFactor: 4,
-                    activeDotColor: HexColor('#F18D35'),
-                  ),
-                ),
-                Spacer(),
-                FloatingActionButton(
-                  onPressed: () {
-                    if (isLast) {
-                      submit();
+      body: Container(
+        color: HexColor('#FFFFFF'),
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView.builder(
+                  onPageChanged: (index) {
+                    if (index == boarding.length - 1) {
+                      setState(() {
+                        isLast = true;
+                      });
                     } else {
-                      boardController.nextPage(
-                          duration: Duration(seconds: 1),
-                          curve: Curves.easeInBack);
+                      setState(() {
+                        isLast = false;
+                      });
                     }
                   },
-                  child: Icon(Icons.arrow_forward),
+                  controller: boardController,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) =>
+                      buildBoardingItem(boarding[index]),
+                  itemCount: boarding.length,
                 ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                children: [
+                  SmoothPageIndicator(
+                    controller: boardController,
+                    count: boarding.length,
+                    effect: ExpandingDotsEffect(
+                      dotColor: Colors.grey,
+                      spacing: 5,
+                      expansionFactor: 4,
+                      activeDotColor: HexColor('#F18D35'),
+                    ),
+                  ),
+                  Spacer(),
+                  FloatingActionButton(
+                    onPressed: () {
+                      if (isLast) {
+                        submit();
+                      } else {
+                        boardController.nextPage(
+                            duration: Duration(seconds: 1),
+                            curve: Curves.easeInBack);
+                      }
+                    },
+                    child: Icon(Icons.arrow_forward),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
