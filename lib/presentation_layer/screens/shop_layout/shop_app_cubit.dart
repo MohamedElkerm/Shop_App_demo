@@ -98,10 +98,12 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   FavoritesModel favoritesModel;
+  bool getFavSuccess = false;
   void getFavorites() {
     emit(ShopLoadingFavoritesDataState());
     DioHelper.getData(url: FAVORITES, lang: 'en',token: token).then((value) {
       favoritesModel = FavoritesModel.fromJson(value.data);
+      getFavSuccess = true;
       print(favoritesModel.data);
       //printFullText(homeModel.data.banners.length);
       print('Success Favorites Model has recived');
@@ -113,13 +115,15 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   ShopLoginModel userModel ;
+  bool getUserDataSuccess = false;
   void getUserData() {
     emit(ShopLoadingUserDataState());
     DioHelper.getData(url: PROFILE, lang: 'en',token: token).then((value) {
       userModel = ShopLoginModel.fromJson(value.data);
       print(userModel.data.name);
+      getUserDataSuccess = true;
       //printFullText(homeModel.data.banners.length);
-      print('Success Favorites Model has recived');
+      print('ger User Data');
       emit(ShopSuccessUserDataState(loginModel: userModel));
     }).catchError((err) {
       emit(ShopErrorUserDataState(err: err));

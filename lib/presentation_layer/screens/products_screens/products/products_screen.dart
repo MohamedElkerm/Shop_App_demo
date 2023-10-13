@@ -18,8 +18,11 @@ class ProductsScreen extends StatelessWidget {
           condition: cubit.homeModel != null && cubit.categoriesModel != null,
           builder: (context) => productsBuilder(
               model: cubit.homeModel, categoriesModel: cubit.categoriesModel),
-          fallback: (context) =>
-              const Center(child: CircularProgressIndicator()),
+          fallback: (context) => Center(
+            child: CircularProgressIndicator(
+              color: color,
+            ),
+          ),
         );
       },
     );
@@ -79,7 +82,9 @@ class ProductsScreen extends StatelessWidget {
                       itemCount: categoriesModel.data.data.length,
                     ),
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Text(
                     'New Products',
                     style: TextStyle(fontSize: 24, color: color),
@@ -134,7 +139,8 @@ class ProductsScreen extends StatelessWidget {
         ],
       );
 
-  Widget buildGridProduct({@required model}) => BlocConsumer<ShopCubit,ShopStates>(
+  Widget buildGridProduct({@required model}) =>
+      BlocConsumer<ShopCubit, ShopStates>(
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
           return Container(
@@ -176,8 +182,8 @@ class ProductsScreen extends StatelessWidget {
                         children: [
                           Text(
                             '${model.price.round()}',
-                            style:
-                            TextStyle(fontSize: 12, height: 1.3, color: color),
+                            style: TextStyle(
+                                fontSize: 12, height: 1.3, color: color),
                           ),
                           const SizedBox(
                             width: 5,
@@ -196,10 +202,15 @@ class ProductsScreen extends StatelessWidget {
                           IconButton(
                             onPressed: () {
                               print(model.id);
-                              BlocProvider.of<ShopCubit>(context).changeFavorites(model.id);
+                              BlocProvider.of<ShopCubit>(context)
+                                  .changeFavorites(model.id);
                             },
                             icon: CircleAvatar(
-                              backgroundColor:BlocProvider.of<ShopCubit>(context).favorites[model.id]?color :Colors.grey ,
+                              backgroundColor:
+                                  BlocProvider.of<ShopCubit>(context)
+                                          .favorites[model.id]
+                                      ? color
+                                      : Colors.grey,
                               child: Icon(
                                 Icons.favorite_border_outlined,
                                 size: 15,

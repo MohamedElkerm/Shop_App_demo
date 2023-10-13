@@ -5,10 +5,35 @@ import 'package:shop_app/constants.dart';
 import 'package:shop_app/presentation_layer/screens/shop_layout/shop_app_cubit.dart';
 import 'package:shop_app/presentation_layer/widgets/SharedWidgets.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key key}) : super(key: key);
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   var nameController = TextEditingController();
+
   var emailController = TextEditingController();
+
   var phoneController = TextEditingController();
+
+
+  @override
+  didChangeDependencies(){
+    super.didChangeDependencies();
+    BlocProvider.of<ShopCubit>(context).getUserData();
+
+  }
+
+  @override
+  initState(){
+    super.initState();
+    // print("Say Hello");
+    BlocProvider.of<ShopCubit>(context).getUserData();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +42,13 @@ class SettingsScreen extends StatelessWidget {
       builder: (context, state) {
         var cubit = BlocProvider.of<ShopCubit>(context);
         var model = cubit.userModel;
-        nameController.text = model.data.name;
-        emailController.text = model.data.email;
-        phoneController.text = model.data.phone;
+
         return ConditionalBuilder(
-          condition: cubit.userModel != null,
-          builder: (BuildContext context) {
+          condition: cubit.getUserDataSuccess == false,
+          fallback: (BuildContext context) {
+            nameController.text = model.data.name;
+            emailController.text = model.data.email;
+            phoneController.text = model.data.phone;
             return Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
@@ -54,15 +80,20 @@ class SettingsScreen extends StatelessWidget {
                     prefix: Icons.phone,
                     type: TextInputType.phone,
                   ),
-                  const SizedBox(height: 20,),
-                  defaultButton(color: color,text: 'Logout', function:(){
-                    signOut(context: context);
-                  })
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  defaultButton(
+                      color: color,
+                      text: 'Logout',
+                      function: () {
+                        signOut(context: context);
+                      })
                 ],
               ),
             );
           },
-          fallback: (context) {
+          builder: (context) {
             return Center(
                 child: CircularProgressIndicator(
               color: color,

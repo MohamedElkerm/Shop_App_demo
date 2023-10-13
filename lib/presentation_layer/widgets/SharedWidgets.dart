@@ -20,7 +20,12 @@ Widget defaultButton({
           r,
         ),
       ),
-      child: FlatButton(
+      child: ElevatedButton(
+
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(color),
+          elevation: MaterialStateProperty.all(0.0),
+        ),
         onPressed: function,
         child: Text(
           isUpper ? text.toUpperCase() : text,
@@ -158,4 +163,4 @@ void printFullText(text) {
   });
 }
 
-String token ='';
+String token = '';

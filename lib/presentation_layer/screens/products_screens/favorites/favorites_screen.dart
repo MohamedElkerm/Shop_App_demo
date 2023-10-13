@@ -6,7 +6,28 @@ import 'package:shop_app/models/favorites_model.dart';
 
 import '../../shop_layout/shop_app_cubit.dart';
 
-class FavoritesScreen extends StatelessWidget {
+class FavoritesScreen extends StatefulWidget {
+
+  @override
+  State<FavoritesScreen> createState() => _FavoritesScreenState();
+}
+
+class _FavoritesScreenState extends State<FavoritesScreen> {
+
+
+  @override
+  didChangeDependencies(){
+    super.didChangeDependencies();
+    BlocProvider.of<ShopCubit>(context).getFavorites();
+
+  }
+
+  @override
+  initState(){
+    super.initState();
+    BlocProvider.of<ShopCubit>(context).getFavorites();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +42,20 @@ class FavoritesScreen extends StatelessWidget {
               builder: (BuildContext context) {
                 return ListView.separated(
                   itemBuilder: (context, index) => buildFavItem(cubit.favoritesModel.data.data[index].product,context),
-                  separatorBuilder: (context, index) => Divider(),
+                  separatorBuilder: (context, index) => const Divider(),
                   itemCount: cubit.favoritesModel.data.data.length,
                 );
               },
-              condition: cubit.favoritesModel.data.data.length!=0,
+              condition: cubit.getFavSuccess == true,
           );
         }
     );
   }
+
   Widget buildFavItem(Product model,context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Container(
+      child: SizedBox(
         height: 120,
         child: Row(
           children: [
@@ -47,7 +69,7 @@ class FavoritesScreen extends StatelessWidget {
                 ),
                 if (model.discount != 0)
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
                     color: color,
                     child: Text(
                       'DISCOUNT',
@@ -117,5 +139,4 @@ class FavoritesScreen extends StatelessWidget {
       ),
     );
   }
-
 }
