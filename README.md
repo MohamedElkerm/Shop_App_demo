@@ -15,6 +15,10 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+# Mockup
+![Shop app mockup](https://github.com/MohamedElkerm/Shop_App_demo/assets/87609841/946de6a7-961b-4043-8bf9-d606562b1118)
+
+
 # On-Boarding Screens
 ![1](https://user-images.githubusercontent.com/87609841/184546293-d96c2cc5-23a4-43a3-9dc0-d649abdbc700.jpg)
 ![2](https://user-images.githubusercontent.com/87609841/184546297-e28c7920-9059-429d-8d5d-27337c85f6e5.jpg)
